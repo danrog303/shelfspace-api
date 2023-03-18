@@ -1,0 +1,26 @@
+frameworkVersion: '3'
+
+service: shelf-space
+
+provider:
+  name: aws
+  apiName: shelf-space-api-gateway
+  runtime: java11
+  region: eu-central-1
+  environment:
+    JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+
+package:
+  artifact: target/shelf-space-0.0.1-SNAPSHOT.jar
+
+functions:
+  api:
+    name: shelf-space-lambda
+    handler: com.github.danrog303.shelfspace.ShelfSpaceAwsLambdaEntrypoint::handleRequest
+    timeout: 45
+    snapStart: true
+    memorySize: 2048
+    events:
+      - http:
+          path: /{proxy+}
+          method: any
