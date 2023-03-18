@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Configuration for Spring Security library.
@@ -34,7 +35,8 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfiguration() {
         return (request) -> {
             CorsConfiguration config = new CorsConfiguration();
-            config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+            List<String> allowedOrigins = List.of("http://localhost:4200", "https://shelfspace.danielrogowski.net");
+            config.setAllowedOrigins(allowedOrigins);
             config.setAllowedMethods(Collections.singletonList("*"));
             config.setAllowedHeaders(Collections.singletonList("*"));
             config.setAllowCredentials(true);
